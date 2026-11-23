@@ -45,3 +45,6 @@ Un ping réussi vers une adresse IP confirme qu'elle répond, pas nécessairemen
 ## Licence
 
 MIT — projet original, sans dépendance à Alarm Keeper Card.
+
+### v1.0.2
+- Correction de l'éditeur visuel : ne recrée plus les champs lors des mises à jour fréquentes de Home Assistant, pour préserver le focus pendant la saisie.

@@ -55,11 +55,11 @@
       if (key === this._lastKey) return;
       this._lastKey = key;
       const accent = online ? (dark ? '#287D60' : '#247155') : offline ? '#C44B4B' : '#89918D';
-      this.shadowRoot.innerHTML = \`
+      this.shadowRoot.innerHTML = `
         <style>
-          :host { display:block; --fj-card:\${dark?'#101412':'#FFFFFF'}; --fj-panel:\${dark?'#171C19':'#F0F2EF'};
-            --fj-outline:\${dark?'#303632':'#DEE4DD'}; --fj-text:\${dark?'#FFFFFF':'#202720'};
-            --fj-muted:\${dark?'#AAB1AD':'#555F58'}; --fj-button:\${dark?'#0D100F':'#FFFFFF'}; --fj-accent:\${accent}; }
+          :host { display:block; --fj-card:${dark?'#101412':'#FFFFFF'}; --fj-panel:${dark?'#171C19':'#F0F2EF'};
+            --fj-outline:${dark?'#303632':'#DEE4DD'}; --fj-text:${dark?'#FFFFFF':'#202720'};
+            --fj-muted:${dark?'#AAB1AD':'#555F58'}; --fj-button:${dark?'#0D100F':'#FFFFFF'}; --fj-accent:${accent}; }
           ha-card { box-sizing:border-box; border:1px solid var(--fj-outline); border-radius:22px;
             background:var(--fj-card); color:var(--fj-text); padding:20px; overflow:hidden; }
           .eyebrow { color:var(--fj-muted); font-size:11px; letter-spacing:1.5px; font-weight:700; }
@@ -82,7 +82,7 @@
         </style>
         <ha-card>
           <div class="eyebrow">FJ INTERNET STATUS CARD</div>
-          <div class="title">\${title}</div>
+          <div class="title">${title}</div>
           <div class="panel">
             <div class="dial" role="status" aria-live="polite">
               <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
@@ -90,15 +90,15 @@
                 <path d="M5 24h38M24 5c-7 7-10 14-10 19s3 12 10 19M24 5c7 7 10 14 10 19s-3 12-10 19M10 14h28M10 34h28"
                   stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
               </svg>
-              <div class="status">\${label}</div>
-              <div class="time">\${escapeHTML(duration)}</div>
+              <div class="status">${label}</div>
+              <div class="time">${escapeHTML(duration)}</div>
             </div>
             <div class="details">
-              <div class="pill primary">\${online?'✓ Internet actif':offline?'✕ Hors ligne':'? État inconnu'}</div>
-              <div class="pill secondary">\${host}</div>
+              <div class="pill primary">${online?'✓ Internet actif':offline?'✕ Hors ligne':'? État inconnu'}</div>
+              <div class="pill secondary">${host}</div>
             </div>
           </div>
-        </ha-card>\`;
+        </ha-card>`;
     }
   }
   if (!customElements.get(TYPE)) customElements.define(TYPE, FJInternetStatusCard);
@@ -110,13 +110,13 @@
       if (!this.config || !this._hass) return;
       const ids = Object.keys(this._hass.states).filter(id => id.startsWith('binary_sensor.'));
       const esc = escapeHTML;
-      this.shadowRoot.innerHTML = \`
+      this.shadowRoot.innerHTML = `
         <style>label{display:block;margin:12px 0 5px}select,input{width:100%;box-sizing:border-box;padding:10px}</style>
         <label for="entity">Capteur Ping</label>
-        <select id="entity">\${ids.map(id=>\`<option value="\${esc(id)}" \${id===this.config.entity?'selected':''}>\${esc(id)}</option>\`).join('')}</select>
-        <label for="title">Titre</label><input id="title" value="\${esc(this.config.title||'Connexion Internet')}">
-        <label for="host">Adresse surveillée (affichage)</label><input id="host" value="\${esc(this.config.host||'8.8.8.8')}">
-      \`;
+        <select id="entity">${ids.map(id=>`<option value="${esc(id)}" ${id===this.config.entity?'selected':''}>${esc(id)}</option>`).join('')}</select>
+        <label for="title">Titre</label><input id="title" value="${esc(this.config.title||'Connexion Internet')}">
+        <label for="host">Adresse surveillée (affichage)</label><input id="host" value="${esc(this.config.host||'8.8.8.8')}">
+      `;
       for (const id of ['entity','title','host']) {
         this.shadowRoot.getElementById(id).addEventListener('change', () => {
           const next = {...this.config};

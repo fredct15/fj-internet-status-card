@@ -1,4 +1,4 @@
-/* FJ Internet Status Card v1.0.0 — original standalone Home Assistant Lovelace card — MIT */
+/* FJ Internet Status Card v1.0.1 — original standalone Home Assistant Lovelace card — MIT */
 (() => {
   const TYPE = 'fj-internet-status-card';
   const escapeHTML = (value) => String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[ch]));

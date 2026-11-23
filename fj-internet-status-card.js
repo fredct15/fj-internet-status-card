@@ -1,4 +1,4 @@
-/* FJ Internet Status Card v1.0.1 — original standalone Home Assistant Lovelace card — MIT */
+/* FJ Internet Status Card v1.0.2 — original standalone Home Assistant Lovelace card — MIT */
 (() => {
   const TYPE = 'fj-internet-status-card';
   const escapeHTML = (value) => String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[ch]));
@@ -104,8 +104,18 @@
   if (!customElements.get(TYPE)) customElements.define(TYPE, FJInternetStatusCard);
   class FJInternetStatusCardEditor extends HTMLElement {
     constructor() { super(); this.attachShadow({mode:'open'}); }
-    setConfig(config) { this.config = config; this.render(); }
-    set hass(hass) { this._hass = hass; this.render(); }
+    setConfig(config) {
+      const previous = this.config;
+      this.config = config;
+      if (!previous || previous.entity !== config.entity || previous.title !== config.title || previous.host !== config.host) {
+        this.render();
+      }
+    }
+    set hass(hass) {
+      // Home Assistant pushes state frequently. Rebuilding inputs here steals focus.
+      this._hass = hass;
+      if (!this.shadowRoot.querySelector('#entity')) this.render();
+    }
     render() {
       if (!this.config || !this._hass) return;
       const ids = Object.keys(this._hass.states).filter(id => id.startsWith('binary_sensor.'));
